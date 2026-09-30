@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="pertakip1.MainPage"
+             Shell.NavBarIsVisible="False">
+ 
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Aspect="AspectFill" ile ekranı boşluk kalmayacak şekilde doldurur -->
+        <Image Grid.Row="0" Grid.RowSpan="3"
+               Source="bg1.png"
+               Aspect="AspectFill"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand" />
+
+        <!-- Üst bilgi satırı -->
+        <Grid Grid.Row="0" Padding="20,5,20,0" ColumnDefinitions="*,Auto">
+            <HorizontalStackLayout Grid.Column="0">
+                <Label Text="Internet:" FontAttributes="Bold" />
+                <Label x:Name="internetControlLabel"  Padding="5,0,0,0" Text="" FontAttributes="Bold" TextColor="Green" />
+                <Label Text="|" Padding="5,0,5,0"/>
+                <Label Text="Letzte Synchronisierung:" FontAttributes="Bold"/>
+                <Label Text="01.01.2026 16:12" Padding="5,0,0,0" FontAttributes="Italic"/>
+            </HorizontalStackLayout>
+
+            <Label Grid.Column="1" Text="Alara Restorant" FontAttributes="Bold" VerticalOptions="Center"/>
+        </Grid>
+     
+        <!-- Ayırıcı çizgi -->
+        <BoxView Grid.Row="1" HeightRequest="0.5" Color="#C0C0C0" Margin="0,5" />
+        <!-- Ortalanan içerik alanı -->
+        <Grid Grid.Row="2">
+            <VerticalStackLayout
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Spacing="15"
+                WidthRequest="{OnIdiom Phone=280, Tablet=420, Desktop=450}">
+
+                <Label
+                    x:Name="Title"
+                    Text="Willkommen"
+                     Style="{StaticResource SubHeadline}"
+                    HorizontalOptions="Center"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+
+                <!-- Girilen şifreyi gösteren noktalar -->
+                <Label
+                    x:Name="PinDisplay"
+                    Text=""
+                    FontSize="32"
+                    HorizontalOptions="Center"
+                    CharacterSpacing="10" />
+
+                <!-- Numeric keypad -->
+                <Grid
+                    x:Name="KeypadContainer"
+                    RowDefinitions="*,*,*,*"
+                    ColumnDefinitions="*,*,*"
+                    RowSpacing="12"
+                    ColumnSpacing="12">
+
+                    <Button Grid.Row="0" Grid.Column="0" Text="1" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="0" Grid.Column="1" Text="2" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="0" Grid.Column="2" Text="3" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+
+                    <Button Grid.Row="1" Grid.Column="0" Text="4" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="1" Grid.Column="1" Text="5" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="1" Grid.Column="2" Text="6" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+
+                    <Button Grid.Row="2" Grid.Column="0" Text="7" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="2" Grid.Column="1" Text="8" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="2" Grid.Column="2" Text="9" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+
+                    <Button Grid.Row="3" Grid.Column="0" Text="C" Clicked="OnClearClicked" BackgroundColor="IndianRed " Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                    <Button Grid.Row="3" Grid.Column="2" Text="⌫" Clicked="OnBackspaceClicked" Style="{StaticResource KeyPad}" />
+
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- ===== YENİ: Sonuç Popup Overlay ===== -->
+        <Grid
+            x:Name="ResultOverlay"
+            Grid.RowSpan="3"
+            IsVisible="False"
+            BackgroundColor="#80000000">
+
+            <Border
+                x:Name="ResultFrame"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="220"
+                HeightRequest="110"
+                Padding="0"
+                >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="5"
+                    >
+                    <Label
+                        x:Name="ResultText"
+                        Text="Erfolgreich"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center" />
+                    <Label 
+                        x:Name="ResultStatus"
+                        TextColor="White" 
+                        HorizontalOptions="Center" 
+                        FontAttributes="Italic"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
