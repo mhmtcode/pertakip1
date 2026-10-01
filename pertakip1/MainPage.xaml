@@ -1,34 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shapes="clr-namespace:Microsoft.Maui.Controls.Shapes;assembly=Microsoft.Maui.Controls"
              x:Class="pertakip1.MainPage"
              Shell.NavBarIsVisible="False">
  
-    <Grid RowDefinitions="Auto,Auto,*">
+    <Grid RowDefinitions="40,*,Auto,Auto">
         <!-- Aspect="AspectFill" ile ekranı boşluk kalmayacak şekilde doldurur -->
-        <Image Grid.Row="0" Grid.RowSpan="3"
+        <Image Grid.Row="0" Grid.RowSpan="4"
                Source="bg1.png"
                Aspect="AspectFill"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand" />
 
-        <!-- Üst bilgi satırı -->
-        <Grid Grid.Row="0" Padding="20,5,20,0" ColumnDefinitions="*,Auto">
-            <HorizontalStackLayout Grid.Column="0">
-                <Label Text="Internet:" FontAttributes="Bold" />
-                <Label x:Name="internetControlLabel"  Padding="5,0,0,0" Text="" FontAttributes="Bold" TextColor="Green" />
-                <Label Text="|" Padding="5,0,5,0"/>
-                <Label Text="Letzte Synchronisierung:" FontAttributes="Bold"/>
-                <Label Text="01.01.2026 16:12" Padding="5,0,0,0" FontAttributes="Italic"/>
-            </HorizontalStackLayout>
-
-            <Label Grid.Column="1" Text="Alara Restorant" FontAttributes="Bold" VerticalOptions="Center"/>
+        <!-- Üst Firma bilgi satırı -->
+        <Grid Grid.Row="0" Padding="20,5,20,0" MinimumHeightRequest="40" BackgroundColor="LightBlue" >
+            <Label Text="Alara Restorant Beeck GmbH." 
+                   FontSize="18"
+                   TextColor="DimGrey"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
         </Grid>
-     
-        <!-- Ayırıcı çizgi -->
-        <BoxView Grid.Row="1" HeightRequest="0.5" Color="#C0C0C0" Margin="0,5" />
+       
         <!-- Ortalanan içerik alanı -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <VerticalStackLayout
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -36,20 +32,29 @@
                 WidthRequest="{OnIdiom Phone=280, Tablet=420, Desktop=450}">
 
                 <Label
+                    Padding="0,3,0,0"
                     x:Name="Title"
-                    Text="Willkommen"
-                     Style="{StaticResource SubHeadline}"
+                    Text="Guten Abend!"
+                     Style="{StaticResource CustomTitle}"
                     HorizontalOptions="Center"
                     SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                    SemanticProperties.Description="Guten Abend!" />
+                <Label
+                    Padding="0,3,0,0"
+                    Text="Bitte gebe dine 5 stellige PIN ein um loszulegen:"
+                    Style="{StaticResource CustomSubTitle}"
+                    HorizontalOptions="Center"
+                    SemanticProperties.HeadingLevel="Level3"
+                    SemanticProperties.Description="Bitte gebe dine 5 stellige PIN ein um loszulegen:" />
 
                 <!-- Girilen şifreyi gösteren noktalar -->
-                <Label
-                    x:Name="PinDisplay"
-                    Text=""
-                    FontSize="32"
-                    HorizontalOptions="Center"
-                    CharacterSpacing="10" />
+                <HorizontalStackLayout x:Name="PinDots" HorizontalOptions="Center" Spacing="14">
+                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+                </HorizontalStackLayout>
 
                 <!-- Numeric keypad -->
                 <Grid
@@ -79,6 +84,21 @@
             </VerticalStackLayout>
         </Grid>
 
+        <!-- Ayırıcı çizgi -->
+        <BoxView Grid.Row="2" HeightRequest="0.5" Color="#C0C0C0" Margin="0,5" />
+
+        <!-- Alt bilgi satırı -->
+        <Grid Grid.Row="3" Padding="20,2,20,5" ColumnDefinitions="*,Auto">
+            <HorizontalStackLayout Grid.Column="0">
+                <Label Text="Internet:" FontAttributes="Bold" />
+                <Label x:Name="internetControlLabel" Padding="5,0,0,0" Text="" FontAttributes="Bold" TextColor="Green" />
+                <Label Text="|" Padding="5,0,5,0"/>
+                <Label Text="Letzte Synchronisierung:" FontAttributes="Bold"/>
+                <Label Text="01.01.2026 16:12" Padding="5,0,0,0" FontAttributes="Italic"/>
+            </HorizontalStackLayout>
+
+            <Label Grid.Column="1" Text="" FontAttributes="Bold" VerticalOptions="Center"/>
+        </Grid>
         <!-- ===== YENİ: Sonuç Popup Overlay ===== -->
         <Grid
             x:Name="ResultOverlay"

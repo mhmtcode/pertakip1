@@ -1,4 +1,6 @@
-﻿namespace pertakip1
+﻿using Microsoft.Maui.Controls.PlatformConfiguration;
+
+namespace pertakip1
 {
     public partial class MainPage : ContentPage
     {
@@ -45,7 +47,12 @@
         private void UpdatePinDisplay()
         {
             // Girilen rakamları gizlemek için • kullanıyoruz
-            PinDisplay.Text = new string('•', _pin.Length);
+            // PinDisplay.Text = new string('•', _pin.Length);
+            for (int i = 0; i < PinDots.Children.Count; i++)
+            {
+                var dot = (Microsoft.Maui.Controls.Shapes.Ellipse)PinDots.Children[i];
+                dot.Fill = i < _pin.Length ? Colors.MidnightBlue : Colors.Transparent;
+            }
         }
 
         private async void CheckPin()
