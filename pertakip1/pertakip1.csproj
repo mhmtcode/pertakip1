@@ -14,6 +14,7 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>pertakip1</RootNamespace>
 		<UseMaui>true</UseMaui>
+		<MauiVersion>10.0.60</MauiVersion>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -42,8 +43,8 @@
 		<!-- Android için tüm CPU mimarilerini aktif et ve hata ayıklama yorumlayıcısını zorunlu kıl -->
 
 		<!-- Debug: sadece tek mimari (emülatör için x64, gerçek tablet için arm64) -->
-		<!--<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Debug'">android-arm</RuntimeIdentifiers>
-		<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' != 'Debug'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>-->
+		<!--<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Debug'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>-->
+		<!--<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' != 'Debug'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>-->
 
 		<!-- Release: gerçek tabletler için arm64 yeterli -->
 		<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
@@ -99,8 +100,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Camera" Version="6.1.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
 	</ItemGroup>
 
 	<ItemGroup>

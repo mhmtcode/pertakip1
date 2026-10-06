@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
+﻿using CommunityToolkit.Maui.Core;
+using Microsoft.Maui.Graphics.Platform;
+
 
 namespace pertakip1
 {
@@ -16,17 +18,18 @@ namespace pertakip1
         }
         private void OnNumberClicked(object sender, EventArgs e)
         {
+            if (_pin.Length == 0)
+                _ = EnsureCameraAsync();   // PIN yazılırken kamera ısınır
             if (_pin.Length >= MaxPinLength) return;
+
+            
 
             var button = (Button)sender;
             _pin += button.Text;
             UpdatePinDisplay();
 
             if (_pin.Length == MaxPinLength)
-            {
-                // Şifre tamamlandı, kontrol et
                 CheckPin();
-            }
         }
 
         private void OnBackspaceClicked(object sender, EventArgs e)
@@ -57,12 +60,30 @@ namespace pertakip1
 
         private async void CheckPin()
         {
-            bool isCorrect = _pin == "12345"; // örnek şifre kontrolü
+            //bool isCorrect = _pin == "12345"; // örnek şifre kontrolü
 
-            await ShowResultPopupAsync(isCorrect);
+            //await ShowResultPopupAsync(isCorrect);
 
+            //_pin = "";
+            //UpdatePinDisplay();
+            var pin = _pin;
             _pin = "";
             UpdatePinDisplay();
+
+            bool isCorrect = pin == "12345";
+            string? photoPath = await TakePhotoAsync();
+            try { Cam.StopCameraPreview(); } catch { }
+            // TODO: SQLite kaydına photoPath ekle
+
+//#if DEBUG
+            if (photoPath != null)
+            {
+                DebugPhoto.Source = ImageSource.FromFile(photoPath);
+                DebugPhoto.IsVisible = true;
+            }
+//#endif
+
+            await ShowResultPopupAsync(isCorrect);
         }
         private async Task ShowResultPopupAsync(bool isCorrect)
         {
@@ -117,7 +138,9 @@ namespace pertakip1
 
         protected override void OnDisappearing()
         {
+            try { Cam.StopCameraPreview(); } catch { }
             base.OnDisappearing();
+
             Connectivity.Current.ConnectivityChanged -= OnConnectivityChanged;
         }
 
@@ -131,6 +154,54 @@ namespace pertakip1
 
             KeypadContainer.WidthRequest = keypadSize;
             KeypadContainer.HeightRequest = keypadSize;
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            Connectivity.Current.ConnectivityChanged += OnConnectivityChanged; // OnDisappearing'de çıkarıyorsun, burada geri ekle
+            try { await Permissions.RequestAsync<Permissions.Camera>(); }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("IZIN HATA: " + ex.Message); }
+        }
+        private async Task<string?> TakePhotoAsync()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    using var cts = new CancellationTokenSource(2000);
+                    await using var stream = await Cam.CaptureImage(cts.Token);
+                    using var img = PlatformImage.FromStream(stream);
+                    using var small = img.Downsize(480, true);
+
+                    var dir = Path.Combine(FileSystem.AppDataDirectory, "photos");
+                    Directory.CreateDirectory(dir);
+                    var path = Path.Combine(dir, $"{Guid.NewGuid()}.jpg");
+                    await File.WriteAllBytesAsync(path, small.AsBytes(ImageFormat.Jpeg, 0.7f));
+                    return path;
+                }
+                catch { await Task.Delay(700); }
+            }
+            return null; // foto olmasa da giriş engellenmesin
+        }
+
+        private async Task EnsureCameraAsync()
+        {
+            try
+            {
+                for (int i = 0; i < 20 && Cam.Handler == null; i++)
+                    await Task.Delay(100);
+                if (Cam.Handler == null) return;
+
+                var cams = await Cam.GetAvailableCameras(CancellationToken.None);
+                if (cams.Count == 0) return;
+
+                Cam.SelectedCamera = cams.FirstOrDefault(c => c.Position == CameraPosition.Front) ?? cams.First();
+                await Cam.StartCameraPreview(CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("KAMERA HATA: " + ex.Message);
+            }
         }
     }
 }

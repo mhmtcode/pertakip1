@@ -2,10 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:shapes="clr-namespace:Microsoft.Maui.Controls.Shapes;assembly=Microsoft.Maui.Controls"
+             xmlns:cam="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui.Camera"
              x:Class="pertakip1.MainPage"
              Shell.NavBarIsVisible="False">
- 
-    <Grid RowDefinitions="40,*,Auto,Auto">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
+        <cam:CameraView x:Name="Cam" Grid.Row="2"
+                        WidthRequest="1" HeightRequest="1"
+                        HorizontalOptions="Start" VerticalOptions="Start"
+                        InputTransparent="True" />
+
         <!-- Aspect="AspectFill" ile ekranı boşluk kalmayacak şekilde doldurur -->
         <Image Grid.Row="0" Grid.RowSpan="4"
                Source="bg1.png"
@@ -21,8 +27,12 @@
                    FontAttributes="Bold"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"/>
+
+
+
+
         </Grid>
-       
+
         <!-- Ortalanan içerik alanı -->
         <Grid Grid.Row="1">
             <VerticalStackLayout
@@ -85,7 +95,9 @@
         </Grid>
 
         <!-- Ayırıcı çizgi -->
+
         <BoxView Grid.Row="2" HeightRequest="0.5" Color="#C0C0C0" Margin="0,5" />
+
 
         <!-- Alt bilgi satırı -->
         <Grid Grid.Row="3" Padding="20,2,20,5" ColumnDefinitions="*,Auto">
@@ -98,7 +110,9 @@
             </HorizontalStackLayout>
 
             <Label Grid.Column="1" Text="" FontAttributes="Bold" VerticalOptions="Center"/>
+
         </Grid>
+
         <!-- ===== YENİ: Sonuç Popup Overlay ===== -->
         <Grid
             x:Name="ResultOverlay"
@@ -118,24 +132,35 @@
                     <RoundRectangle CornerRadius="12" />
                 </Border.StrokeShape>
 
-                <VerticalStackLayout
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Spacing="5"
-                    >
-                    <Label
-                        x:Name="ResultText"
-                        Text="Erfolgreich"
-                        FontSize="18"
-                        FontAttributes="Bold"
-                        TextColor="White"
-                        HorizontalOptions="Center" />
-                    <Label 
-                        x:Name="ResultStatus"
-                        TextColor="White" 
-                        HorizontalOptions="Center" 
-                        FontAttributes="Italic"/>
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="20">
+                    <Image x:Name="DebugPhoto" IsVisible="False" Grid.Column="0"
+                           WidthRequest="100" HeightRequest="100"/>
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Spacing="5"
+                        Grid.Column="1">
+                        <Label
+                            x:Name="ResultText"
+                            Text="Erfolgreich"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
+                        <Label 
+                            x:Name="ResultStatus"
+                            TextColor="White" 
+                            HorizontalOptions="Center" 
+                            FontAttributes="Italic"/>
+                    </VerticalStackLayout>
+                </Grid>
+                
+                    
+
+                  
+               
+
             </Border>
         </Grid>
 
