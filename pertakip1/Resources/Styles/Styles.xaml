@@ -451,10 +451,10 @@
 
     <!-- Tüm varsayılan numara butonları için stil -->
     <Style TargetType="Button" x:Key="yeniTasarimButton">
-        <Setter Property="WidthRequest" Value="90"/>
-        <Setter Property="HeightRequest" Value="55"/>
+        <Setter Property="WidthRequest" Value="120"/>
+        <Setter Property="HeightRequest" Value="80"/>
         <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="25"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="Shadow">
             <Shadow Brush="Black" Offset="0,2" Radius="4" Opacity="0.05"/>
@@ -487,10 +487,10 @@
     
     <!-- "C" (Clear) Butonuna Özel Stil -->
     <Style x:Key="KeypadClearButtonStyle" TargetType="Button">
-        <Setter Property="WidthRequest" Value="90"/>
-        <Setter Property="HeightRequest" Value="55"/>
+        <Setter Property="WidthRequest" Value="120"/>
+        <Setter Property="HeightRequest" Value="80"/>
         <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="25"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="Shadow">
             <Shadow Brush="Black" Offset="0,2" Radius="4" Opacity="0.05"/>
