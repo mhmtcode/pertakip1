@@ -72,7 +72,18 @@ namespace pertakip1
             }
             //#endif
 
-            await ShowResultPopupAsync(isCorrect);
+            if (!isCorrect)
+            {
+                // 1. Sağa sola sallanma animasyonunu çalıştır
+                await ShakePinDotsAsync();
+               
+            }
+            else
+            {
+                // Doğru şifre girildiğinde yapılacak işlemler (Örn: Sayfa geçişi)
+                await ShowResultPopupAsync(isCorrect);
+            }
+           
 
             _pin = "";
             UpdatePinDisplay();
@@ -202,5 +213,24 @@ namespace pertakip1
             // Ayarlar sayfasına geçiş yap
             //Shell.Current.GoToAsync("//SettingsPage");
         }
+
+
+        private async Task ShakePinDotsAsync()
+        {
+            uint duration = 40; // Her bir sağa/sola kayma hareketi süresi (milisaniye)
+
+            // Dairelerin tutulduğu HorizontalStackLayout'u sağa-sola kaydırma adımları
+            await PinDots.TranslateTo(-15, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(15, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(-12, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(12, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(-8, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(8, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(-4, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(4, 0, duration, Easing.Linear);
+            await PinDots.TranslateTo(0, 0, duration, Easing.Linear); // Başlangıç konumuna geri getir
+        }
+
+
     }
 }

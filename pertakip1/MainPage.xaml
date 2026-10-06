@@ -43,10 +43,19 @@
                 </Image>
             </Grid>
         </Border>
-        
+
 
         <!-- ================= 2. ORTA İÇERİK ALANI ================= -->
-        <Grid Grid.Row="1" ColumnDefinitions="2*, 4*, 2*"> 
+        <Grid Grid.Row="1" ColumnDefinitions="2*, 4*, 2*">
+
+            <Image Grid.Column="0" 
+           Grid.ColumnSpan="3" 
+           Source="bg2.svg" 
+           Aspect="AspectFill" 
+           HorizontalOptions="FillAndExpand" 
+           VerticalOptions="FillAndExpand"/>
+
+
             <!-- ORTA ALAN: PIN Giriş & Numaratör -->
             <VerticalStackLayout Grid.Column="1" 
                                  VerticalOptions="Center" 
@@ -79,7 +88,7 @@
                       ColumnDefinitions="Auto,Auto,Auto" 
                       RowSpacing="12" 
                       ColumnSpacing="12" 
-                      HorizontalOptions="Center">                   
+                      HorizontalOptions="Center">
 
                     <!-- Satır 1 -->
                     <Button Grid.Row="0" Grid.Column="0" Text="1" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
@@ -145,7 +154,7 @@
                     <Label Text="Letzte Synchronisierung: " FontSize="12" FontAttributes="Bold"/>
                     <Label Text="01.01.2026 16:12"  FontSize="12"/>
                 </HorizontalStackLayout>
-                
+
             </Grid>
         </Border>
 
@@ -192,11 +201,11 @@
                             FontAttributes="Italic"/>
                     </VerticalStackLayout>
                 </Grid>
-                
-                    
 
-                  
-               
+
+
+
+
 
             </Border>
         </Grid>
