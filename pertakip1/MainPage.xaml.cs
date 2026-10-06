@@ -22,7 +22,7 @@ namespace pertakip1
                 _ = EnsureCameraAsync();   // PIN yazılırken kamera ısınır
             if (_pin.Length >= MaxPinLength) return;
 
-            
+
 
             var button = (Button)sender;
             _pin += button.Text;
@@ -49,8 +49,6 @@ namespace pertakip1
 
         private void UpdatePinDisplay()
         {
-            // Girilen rakamları gizlemek için • kullanıyoruz
-            // PinDisplay.Text = new string('•', _pin.Length);
             for (int i = 0; i < PinDots.Children.Count; i++)
             {
                 var dot = (Microsoft.Maui.Controls.Shapes.Ellipse)PinDots.Children[i];
@@ -60,37 +58,31 @@ namespace pertakip1
 
         private async void CheckPin()
         {
-            //bool isCorrect = _pin == "12345"; // örnek şifre kontrolü
-
-            //await ShowResultPopupAsync(isCorrect);
-
-            //_pin = "";
-            //UpdatePinDisplay();
             var pin = _pin;
-            _pin = "";
-            UpdatePinDisplay();
-
             bool isCorrect = pin == "12345";
             string? photoPath = await TakePhotoAsync();
             try { Cam.StopCameraPreview(); } catch { }
             // TODO: SQLite kaydına photoPath ekle
 
-//#if DEBUG
+            //#if DEBUG
             if (photoPath != null)
             {
                 DebugPhoto.Source = ImageSource.FromFile(photoPath);
                 DebugPhoto.IsVisible = true;
             }
-//#endif
+            //#endif
 
             await ShowResultPopupAsync(isCorrect);
+
+            _pin = "";
+            UpdatePinDisplay();
         }
         private async Task ShowResultPopupAsync(bool isCorrect)
         {
             // Renk ve içerik ayarla
             ResultFrame.BackgroundColor = isCorrect ? Colors.MediumSeaGreen : Colors.IndianRed;
             ResultText.Text = isCorrect ? "Passwort richtig" : "Passwort falsch";
-            ResultStatus.Text= isCorrect ? "Giris Yaptiniz" : "Cikis Yaptiniz";
+            ResultStatus.Text = isCorrect ? "Giris Yaptiniz" : "Cikis Yaptiniz";
             // Görünür yap, hafif animasyonla büyüterek göster
             ResultOverlay.Opacity = 0;
             ResultOverlay.IsVisible = true;
@@ -131,8 +123,9 @@ namespace pertakip1
             {
                 isInternetConnected = access == NetworkAccess.Internet;
 
-                internetControlLabel.Text = isInternetConnected ? "Connection" : "Keine Connection";
-                internetControlLabel.TextColor = isInternetConnected ? Colors.Green : Colors.Red;
+                internetConnectionLabel.Text = isInternetConnected ? "Connection" : "Keine Connection";
+                internetConnectionLabel.TextColor = isInternetConnected ? Colors.Green : Colors.Red;
+                connetionStatus.Fill = isInternetConnected ? Colors.Green : Colors.Red;
             });
         }
 
@@ -152,8 +145,8 @@ namespace pertakip1
             double baseSize = Math.Min(width, height);
             double keypadSize = baseSize * 0.45; // ekranın %55'i kadar keypad
 
-            KeypadContainer.WidthRequest = keypadSize;
-            KeypadContainer.HeightRequest = keypadSize;
+            //KeypadContainer.WidthRequest = keypadSize;
+            //KeypadContainer.HeightRequest = keypadSize;
         }
         protected override async void OnAppearing()
         {
@@ -202,6 +195,12 @@ namespace pertakip1
             {
                 System.Diagnostics.Debug.WriteLine("KAMERA HATA: " + ex.Message);
             }
+        }
+
+        private void OnSettingsClicked(object sender, EventArgs e)
+        {
+            // Ayarlar sayfasına geçiş yap
+            //Shell.Current.GoToAsync("//SettingsPage");
         }
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="katman_1" data-name="katman 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-4 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: #e9f4fc;
+      }
+
+      .cls-3 {
+        fill: #fafcfe;
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="1" y="1" width="1199" height="799"/>
+    </clipPath>
+  </defs>
+  <rect class="cls-3" x="1" y="1" width="1199" height="799"/>
+  <g class="cls-4">
+    <path class="cls-2" d="m1276.5,664.5c0,105.21-252.98,311-625.5,311S-23.5,890.21-23.5,785c0-56.16,111.13,6.37,248-28.5,119.56-30.46,202.32-190,376-190,83.4,0,268.27,139.18,342,147,255.6,27.1,334-130.66,334-49Z"/>
+    <ellipse class="cls-2" cx="21" cy="481" rx="224" ry="171"/>
+  </g>
+  <path class="cls-2" d="m770,367c-18.2,15.93-89.9,262.71-159,107-64.74-145.89-177-57.31-177-128,0-28.75-95.51-89.32,35.24-76.66s83.76-51.34,141.76-51.34c45.4,0,77.26-17.64,118.13,32.68s80.87,81.32,40.87,116.32Z"/>
+</svg>

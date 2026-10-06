@@ -4,114 +4,151 @@
              xmlns:shapes="clr-namespace:Microsoft.Maui.Controls.Shapes;assembly=Microsoft.Maui.Controls"
              xmlns:cam="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui.Camera"
              x:Class="pertakip1.MainPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F4F7FA">
 
-    <Grid RowDefinitions="Auto,*,Auto,Auto">
+    <Grid RowDefinitions="Auto, *, Auto">
         <cam:CameraView x:Name="Cam" Grid.Row="2"
                         WidthRequest="1" HeightRequest="1"
                         HorizontalOptions="Start" VerticalOptions="Start"
                         InputTransparent="True" />
 
-        <!-- Aspect="AspectFill" ile ekranı boşluk kalmayacak şekilde doldurur -->
-        <Image Grid.Row="0" Grid.RowSpan="4"
-               Source="bg1.png"
-               Aspect="AspectFill"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand" />
 
-        <!-- Üst Firma bilgi satırı -->
-        <Grid Grid.Row="0" Padding="20,5,20,0" MinimumHeightRequest="40" BackgroundColor="LightBlue" >
-            <Label Text="Alara Restorant Beeck GmbH." 
-                   FontSize="18"
-                   TextColor="DimGrey"
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"/>
-
-
-
-
-        </Grid>
-
-        <!-- Ortalanan içerik alanı -->
-        <Grid Grid.Row="1">
-            <VerticalStackLayout
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Spacing="15"
-                WidthRequest="{OnIdiom Phone=280, Tablet=420, Desktop=450}">
-
-                <Label
-                    Padding="0,3,0,0"
-                    x:Name="Title"
-                    Text="Guten Abend!"
-                     Style="{StaticResource CustomTitle}"
-                    HorizontalOptions="Center"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Guten Abend!" />
-                <Label
-                    Padding="0,3,0,0"
-                    Text="Bitte gebe dine 5 stellige PIN ein um loszulegen:"
-                    Style="{StaticResource CustomSubTitle}"
-                    HorizontalOptions="Center"
-                    SemanticProperties.HeadingLevel="Level3"
-                    SemanticProperties.Description="Bitte gebe dine 5 stellige PIN ein um loszulegen:" />
-
-                <!-- Girilen şifreyi gösteren noktalar -->
-                <HorizontalStackLayout x:Name="PinDots" HorizontalOptions="Center" Spacing="14">
-                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
-                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
-                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
-                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
-                    <shapes:Ellipse WidthRequest="15" HeightRequest="15" Stroke="{StaticResource MidnightBlue}" StrokeThickness="2" />
+        <!-- ================= 1. ÜST BAR (HEADER) ================= -->
+        <Border StrokeThickness="0" Padding="10,8">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="20,15">
+                <!-- Logo ve Şirket Adı -->
+                <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
+                    <!-- Şirket Logosu -->
+                    <Image Source="mevlana_logo.png" WidthRequest="70" HeightRequest="70" VerticalOptions="Center" />
+                    <!-- Şirket İsmi -->
+                    <Label Text="Alara Restorant Beeck GmbH." 
+       FontSize="28" 
+       FontAttributes="Bold" 
+       TextColor="#2C3E50" 
+       VerticalOptions="Center"/>
                 </HorizontalStackLayout>
 
-                <!-- Numeric keypad -->
-                <Grid
-                    x:Name="KeypadContainer"
-                    RowDefinitions="*,*,*,*"
-                    ColumnDefinitions="*,*,*"
-                    RowSpacing="12"
-                    ColumnSpacing="12">
+                <!-- Sağ Ayarlar İkonu (15x15 Kesin Boyut) -->
+                <Image Grid.Column="2" 
+   Source="settings.png" 
+   WidthRequest="30" 
+   HeightRequest="30"
+   Aspect="AspectFit"                   
+   VerticalOptions="Center"
+   HorizontalOptions="End">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSettingsClicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+        
 
-                    <Button Grid.Row="0" Grid.Column="0" Text="1" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="0" Grid.Column="1" Text="2" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="0" Grid.Column="2" Text="3" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+        <!-- ================= 2. ORTA İÇERİK ALANI ================= -->
+        <Grid Grid.Row="1" ColumnDefinitions="2*, 4*, 2*"> 
+            <!-- ORTA ALAN: PIN Giriş & Numaratör -->
+            <VerticalStackLayout Grid.Column="1" 
+                                 VerticalOptions="Center" 
+                                 HorizontalOptions="Center" 
+                                 Spacing="12">
 
-                    <Button Grid.Row="1" Grid.Column="0" Text="4" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="1" Grid.Column="1" Text="5" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="1" Grid.Column="2" Text="6" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                <!-- Başlıklar -->
+                <Label Text="Guten Abend!" 
+                       FontSize="38" 
+                       FontAttributes="Bold" 
+                       TextColor="#202F58" 
+                       HorizontalOptions="Center"/>
 
-                    <Button Grid.Row="2" Grid.Column="0" Text="7" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="2" Grid.Column="1" Text="8" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="2" Grid.Column="2" Text="9" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
+                <Label Text="Bitte geben Sie 5 stellige PIN ein um loszulegen:" 
+                       FontSize="20" 
+                       TextColor="#5A6B82" 
+                       HorizontalOptions="Center"/>
 
-                    <Button Grid.Row="3" Grid.Column="0" Text="C" Clicked="OnClearClicked" BackgroundColor="IndianRed " Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnNumberClicked" Style="{StaticResource KeyPad}" />
-                    <Button Grid.Row="3" Grid.Column="2" Text="⌫" Clicked="OnBackspaceClicked" Style="{StaticResource KeyPad}" />
+                <!-- PIN Gösterge Halka İndikatörleri (5 Adet Halka) -->
+                <HorizontalStackLayout x:Name="PinDots" HorizontalOptions="Center" Spacing="12" Margin="0,5,0,15">
+                    <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
+                    <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
+                    <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
+                    <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
+                    <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
+                </HorizontalStackLayout>
 
+                <!-- Keypad (Numaralar) Grid'i -->
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
+                      ColumnDefinitions="Auto,Auto,Auto" 
+                      RowSpacing="12" 
+                      ColumnSpacing="12" 
+                      HorizontalOptions="Center">                   
+
+                    <!-- Satır 1 -->
+                    <Button Grid.Row="0" Grid.Column="0" Text="1" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="0" Grid.Column="1" Text="2" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="0" Grid.Column="2" Text="3" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+
+                    <!-- Satır 2 -->
+                    <Button Grid.Row="1" Grid.Column="0" Text="4" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="1" Grid.Column="1" Text="5" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="1" Grid.Column="2" Text="6" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+
+                    <!-- Satır 3 -->
+                    <Button Grid.Row="2" Grid.Column="0" Text="7" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Text="8" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+                    <Button Grid.Row="2" Grid.Column="2" Text="9" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+
+                    <!-- Satır 4 -->
+                    <!-- Temizleme (C) Butonu (Kırmızı / Mercan Rengi) -->
+                    <Button Grid.Row="3" Grid.Column="0" Text="C" TextColor="White" Clicked="OnClearClicked" Style="{StaticResource KeypadClearButtonStyle}"/>
+
+                    <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
+
+                    <!-- Silme / Backspace Butonu (Açık Mavi / Gri Rengi) -->
+                    <ImageButton Grid.Row="3" Grid.Column="2"                                  
+                                 BackgroundColor="#DDE7F0" 
+                                 CornerRadius="10" 
+                                 WidthRequest="90" 
+                                 HeightRequest="55" />
                 </Grid>
+            </VerticalStackLayout>
+
+            <!-- SAĞ ALAN: Saat İkonu ve Slogan -->
+            <VerticalStackLayout Grid.Column="2" 
+                                 VerticalOptions="Center" 
+                                 HorizontalOptions="Center" 
+                                 Spacing="15">
+                <!-- Saat İllüstrasyonu -->
+                <Image Source="shield.png" WidthRequest="100" HeightRequest="100"/>
+
+                <Label Text="Gemeinsam&#10;mehr erreichen." 
+                       FontSize="16" 
+                       TextColor="#4A6572" 
+                       HorizontalTextAlignment="Center" 
+                       FontAttributes="Bold"/>
+
+                <!-- Alt Mavi Çizgi Detayı -->
+                <BoxView WidthRequest="30" HeightRequest="3" Color="#4A90E2" HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Grid>
 
-        <!-- Ayırıcı çizgi -->
 
-        <BoxView Grid.Row="2" HeightRequest="0.5" Color="#C0C0C0" Margin="0,5" />
+        <!-- ================= 3. ALT DURUM BARI (FOOTER) ================= -->
+        <Border Grid.Row="2" BackgroundColor="#E8EFF5" StrokeThickness="0" Padding="15,8">
+            <Grid ColumnDefinitions="Auto, *, Auto">
 
+                <!-- Bağlantı Durumu -->
+                <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                    <Ellipse x:Name="connetionStatus" WidthRequest="10" HeightRequest="10" Fill="#2ECC71"/>
+                    <Label Text="Internet:" FontSize="12"/>
+                    <Label x:Name="internetConnectionLabel" TextColor="#27AE60" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="|" TextColor="#BDC3C7" Margin="10,0"/>
 
-        <!-- Alt bilgi satırı -->
-        <Grid Grid.Row="3" Padding="20,2,20,5" ColumnDefinitions="*,Auto">
-            <HorizontalStackLayout Grid.Column="0">
-                <Label Text="Internet:" FontAttributes="Bold" />
-                <Label x:Name="internetControlLabel" Padding="5,0,0,0" Text="" FontAttributes="Bold" TextColor="Green" />
-                <Label Text="|" Padding="5,0,5,0"/>
-                <Label Text="Letzte Synchronisierung:" FontAttributes="Bold"/>
-                <Label Text="01.01.2026 16:12" Padding="5,0,0,0" FontAttributes="Italic"/>
-            </HorizontalStackLayout>
+                    <Label Text="Letzte Synchronisierung: " FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="01.01.2026 16:12"  FontSize="12"/>
+                </HorizontalStackLayout>
+                
+            </Grid>
+        </Border>
 
-            <Label Grid.Column="1" Text="" FontAttributes="Bold" VerticalOptions="Center"/>
-
-        </Grid>
 
         <!-- ===== YENİ: Sonuç Popup Overlay ===== -->
         <Grid
@@ -124,7 +161,7 @@
                 x:Name="ResultFrame"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                WidthRequest="220"
+                WidthRequest="300"
                 HeightRequest="110"
                 Padding="0"
                 >

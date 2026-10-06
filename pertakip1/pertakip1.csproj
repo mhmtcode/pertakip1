@@ -43,7 +43,8 @@
 		<!-- Android için tüm CPU mimarilerini aktif et ve hata ayıklama yorumlayıcısını zorunlu kıl -->
 
 		<!-- Debug: sadece tek mimari (emülatör için x64, gerçek tablet için arm64) -->
-		<!--<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Debug'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>-->
+		<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Debug'">android-x64</RuntimeIdentifiers>
+		
 		<!--<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' != 'Debug'">android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>-->
 
 		<!-- Release: gerçek tabletler için arm64 yeterli -->
