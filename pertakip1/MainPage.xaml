@@ -75,7 +75,7 @@
                        HorizontalOptions="Center"/>
 
                 <!-- PIN Gösterge Halka İndikatörleri (5 Adet Halka) -->
-                <HorizontalStackLayout x:Name="PinDots" HorizontalOptions="Center" Spacing="12" Margin="0,5,0,15">
+                <HorizontalStackLayout x:Name="PinDots" HorizontalOptions="Center" Spacing="30" Margin="0,5,0,15">
                     <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
                     <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
                     <Ellipse WidthRequest="18" HeightRequest="18" Stroke="#3A506B" StrokeThickness="2" Fill="Transparent"/>
@@ -112,11 +112,7 @@
                     <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
 
                     <!-- Silme / Backspace Butonu (Açık Mavi / Gri Rengi) -->
-                    <ImageButton Grid.Row="3" Grid.Column="2"                                  
-                                 BackgroundColor="#DDE7F0" 
-                                 CornerRadius="10" 
-                                 WidthRequest="90" 
-                                 HeightRequest="55" />
+                    <Button Grid.Row="3" Grid.Column="2" Text="⌫" Style="{StaticResource yeniTasarimButton}" />
                 </Grid>
             </VerticalStackLayout>
 
