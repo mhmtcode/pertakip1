@@ -15,8 +15,8 @@
 
 
         <!-- ================= 1. ÜST BAR (HEADER) ================= -->
-        <Border StrokeThickness="0" Padding="10,8">
-            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="20,15">
+        <Border StrokeThickness="0" Padding="10,3">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="20,0">
                 <!-- Logo ve Şirket Adı -->
                 <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
                     <!-- Şirket Logosu -->
@@ -48,29 +48,40 @@
         <!-- ================= 2. ORTA İÇERİK ALANI ================= -->
         <Grid Grid.Row="1" ColumnDefinitions="2*, 4*, 2*">
 
-            <Image Grid.Column="0" 
-           Grid.ColumnSpan="3" 
-           Source="bg2.svg" 
-           Aspect="AspectFill" 
-           HorizontalOptions="FillAndExpand" 
-           VerticalOptions="FillAndExpand"/>
 
+            <!-- SVG KULLANMADAN BİREBİR AYNI ARKA PLAN (EN HIZLI YÖNTEM) -->
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="#BCE2F8" Offset="0.0"/>
+                    <GradientStop Color="#C6E6F8" Offset="0.17"/>
+                    <GradientStop Color="#E3F1FB" Offset="0.47"/>
+                    <GradientStop Color="#E9F4FC" Offset="0.52"/>
+                    <GradientStop Color="#FFF" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
 
+            <VerticalStackLayout Grid.Column="0" 
+                                 VerticalOptions="Center" 
+                                 HorizontalOptions="Center" 
+                                 Spacing="12"
+                                 x:Name="LeftPanel"
+                />
             <!-- ORTA ALAN: PIN Giriş & Numaratör -->
             <VerticalStackLayout Grid.Column="1" 
                                  VerticalOptions="Center" 
                                  HorizontalOptions="Center" 
-                                 Spacing="12">
+                                 Spacing="12"
+                                 x:Name="CenterPanel">
 
                 <!-- Başlıklar -->
                 <Label Text="Guten Abend!" 
-                       FontSize="38" 
+                       FontSize="{DynamicResource TitleFontSize}" 
                        FontAttributes="Bold" 
                        TextColor="#202F58" 
                        HorizontalOptions="Center"/>
 
                 <Label Text="Bitte geben Sie 5 stellige PIN ein um loszulegen:" 
-                       FontSize="20" 
+                       FontSize="{DynamicResource SubTitleFontSize}" 
                        TextColor="#5A6B82" 
                        HorizontalOptions="Center"/>
 
@@ -86,8 +97,8 @@
                 <!-- Keypad (Numaralar) Grid'i -->
                 <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
                       ColumnDefinitions="Auto,Auto,Auto" 
-                      RowSpacing="12" 
-                      ColumnSpacing="12" 
+                      RowSpacing="10" 
+                      ColumnSpacing="10" 
                       HorizontalOptions="Center">
 
                     <!-- Satır 1 -->
@@ -112,7 +123,7 @@
                     <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnNumberClicked" Style="{StaticResource yeniTasarimButton}"/>
 
                     <!-- Silme / Backspace Butonu (Açık Mavi / Gri Rengi) -->
-                    <Button Grid.Row="3" Grid.Column="2" Text="⌫" Style="{StaticResource yeniTasarimButton}" />
+                    <Button Grid.Row="3" Grid.Column="2" Text="⌫" Style="{StaticResource yeniSilmeTasarimButton}" />
                 </Grid>
             </VerticalStackLayout>
 
@@ -120,7 +131,8 @@
             <VerticalStackLayout Grid.Column="2" 
                                  VerticalOptions="Center" 
                                  HorizontalOptions="Center" 
-                                 Spacing="15">
+                                 Spacing="15"
+                                 x:Name="RightPanel" >
                 <!-- Saat İllüstrasyonu -->
                 <Image Source="shield.png" WidthRequest="100" HeightRequest="100"/>
 
@@ -142,13 +154,13 @@
 
                 <!-- Bağlantı Durumu -->
                 <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
-                    <Ellipse x:Name="connetionStatus" WidthRequest="10" HeightRequest="10" Fill="#2ECC71"/>
-                    <Label Text="Internet:" FontSize="12"/>
-                    <Label x:Name="internetConnectionLabel" TextColor="#27AE60" FontSize="12" FontAttributes="Bold"/>
+                    <Ellipse x:Name="connetionStatus" WidthRequest="15" HeightRequest="15" Fill="#2ECC71"/>
+                    <Label Text="Internet:" FontSize="15"/>
+                    <Label x:Name="internetConnectionLabel" TextColor="#27AE60" FontSize="15" FontAttributes="Bold"/>
                     <Label Text="|" TextColor="#BDC3C7" Margin="10,0"/>
 
-                    <Label Text="Letzte Synchronisierung: " FontSize="12" FontAttributes="Bold"/>
-                    <Label Text="01.01.2026 16:12"  FontSize="12"/>
+                    <Label Text="Letzte Synchronisierung: " FontSize="15" FontAttributes="Bold"/>
+                    <Label Text="01.01.2026 16:12"  FontSize="15"/>
                 </HorizontalStackLayout>
 
             </Grid>

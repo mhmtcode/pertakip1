@@ -19,8 +19,8 @@ namespace pertakip1
         private void OnNumberClicked(object sender, EventArgs e)
         {
             if (_pin.Length == 0)
-                _ = EnsureCameraAsync();   // PIN yazılırken kamera ısınır
-            if (_pin.Length >= MaxPinLength) return;
+
+                if (_pin.Length >= MaxPinLength) return;
 
 
 
@@ -29,7 +29,11 @@ namespace pertakip1
             UpdatePinDisplay();
 
             if (_pin.Length == MaxPinLength)
+            {
+                _ = EnsureCameraAsync();   // PIN yazılırken kamera ısınır
                 CheckPin();
+            }
+
         }
 
         private void OnBackspaceClicked(object sender, EventArgs e)
@@ -76,14 +80,14 @@ namespace pertakip1
             {
                 // 1. Sağa sola sallanma animasyonunu çalıştır
                 await ShakePinDotsAsync();
-               
+
             }
             else
             {
                 // Doğru şifre girildiğinde yapılacak işlemler (Örn: Sayfa geçişi)
                 await ShowResultPopupAsync(isCorrect);
             }
-           
+
 
             _pin = "";
             UpdatePinDisplay();
@@ -151,13 +155,41 @@ namespace pertakip1
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            if (width <= 0 || height <= 0) return;
 
-            double baseSize = Math.Min(width, height);
-            double keypadSize = baseSize * 0.45; // ekranın %55'i kadar keypad
+            if (width <= 0 || Height <= 0) return;
 
-            //KeypadContainer.WidthRequest = keypadSize;
-            //KeypadContainer.HeightRequest = keypadSize;
+            bool compact = Height < 480;                 // 7" tablet
+            double title = compact ? 24 : 38;
+            double sub = compact ? 14 : 20;
+
+
+            double scale = Height switch
+            {
+                < 700 => 0.55,      // 7"
+                < 900 => 1.20,     // 10"
+                _ => 1.3       // büyük tablet
+            };
+
+
+            // Başlık + alt başlık + halkalar + StackLayout boşlukları (3 x 12)
+            double fixedH = title * 1.3 + sub * 1.3 + 38 + 3 * 12;
+
+            //// 4 satır + 3 boşluk (10) + güvenlik payı
+            double keyH = (Height - fixedH - 3 * 10 - 16) / 4;
+            keyH = Math.Clamp(keyH * scale, 40, 70);
+            double keyW = Math.Clamp(keyH * 1.5, 56, 110);
+           
+
+            var res = Application.Current!.Resources;
+            res["KeyHeight"] = keyH;
+            res["KeyWidth"] = keyW;
+            res["KeyFontSize"] = keyH * 0.38;
+            res["TitleFontSize"] = title;
+            res["SubTitleFontSize"] = sub;
+
+            var d = DeviceDisplay.Current.MainDisplayInfo;
+            bool landscape = d.Orientation == DisplayOrientation.Landscape;
+            RightPanel.IsVisible = landscape;
         }
         protected override async void OnAppearing()
         {
@@ -165,6 +197,10 @@ namespace pertakip1
             Connectivity.Current.ConnectivityChanged += OnConnectivityChanged; // OnDisappearing'de çıkarıyorsun, burada geri ekle
             try { await Permissions.RequestAsync<Permissions.Camera>(); }
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine("IZIN HATA: " + ex.Message); }
+
+            
+
+           
         }
         private async Task<string?> TakePhotoAsync()
         {
@@ -231,6 +267,7 @@ namespace pertakip1
             await PinDots.TranslateTo(0, 0, duration, Easing.Linear); // Başlangıç konumuna geri getir
         }
 
+        
 
     }
 }
